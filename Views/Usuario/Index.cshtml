@@ -1,0 +1,94 @@
+﻿@model List<UsuarioModel>
+@{
+    ViewData["Title"] = "Lista de Usuários";
+}
+
+<!-- Referência ao AngularJS Core -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+<div ng-app="myApp">
+    <div class="text-center" ng-controller="UsuarioController">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a class="btn btn-primary" role="button" asp-controller="Usuario" asp-action="Cadastrar">Adicionar novo usuário</a>
+        </div>
+
+
+
+
+        <br />
+
+        @if (TempData["MensagemSucesso"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+                @TempData["MensagemSucesso"]
+            </div>
+        }
+
+        @if (TempData["MensagemErro"] != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                <button type="button" class="btn btn-danger btn-sm close-alert" arial-label="Close">x</button>
+                @TempData["MensagemErro"]
+            </div>
+        }
+
+
+        <h1 class="display-4">Lista de usuários</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Ações</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                
+
+
+                @if (Model != null && Model.Any())
+                {
+                    foreach (UsuarioModel usuario in Model)
+                    {
+                        <tr>
+                            <th scope="row">@usuario.Codigo</th>
+                            <td>@usuario.Nome</td>
+                            <td>@usuario.CPF</td>
+                            <td>@usuario.Endereco</td>
+                            <td>@usuario.Telefone</td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a role="button" class="btn btn-primary" asp-route-id="@usuario.Id" asp-controller="Usuario" asp-action="Editar">Editar</a>
+                                    <a role="button" class="btn btn-danger" asp-route-id="@usuario.Id" asp-controller="Usuario" asp-action="Apagar" method="delete">Apagar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@* <script>
+    // Criação do módulo AngularJS
+    var app = angular.module('myApp', []);
+
+    // Definição do controlador UsuarioController
+    app.controller('UsuarioController', function ($scope) {
+        // Lista de usuários (simulando dados estáticos)
+        $scope.users = [
+            { id: 1, name: 'Mark Otto', email: 'mark@example.com' },
+            { id: 2, name: 'Jacob Thornton', email: 'jacob@example.com' },
+            { id: 3, name: 'Ananias Thornton', email: 'ananias@example.com' }
+        ];
+    });
+</script> *@
+
+
